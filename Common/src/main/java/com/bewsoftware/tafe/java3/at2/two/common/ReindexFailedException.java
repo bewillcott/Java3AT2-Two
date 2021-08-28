@@ -26,7 +26,7 @@
 package com.bewsoftware.tafe.java3.at2.two.common;
 
 /**
- * ReindexFailedException class description.
+ * This would be used when ever an indexation process has failed.
  *
  * @author <a href="mailto:bw.opensource@yahoo.com">Bradley Willcott</a>
  *
@@ -36,6 +36,9 @@ package com.bewsoftware.tafe.java3.at2.two.common;
 public class ReindexFailedException extends RuntimeException
 {
 
+    /**
+     * For serialization.
+     */
     private static final long serialVersionUID = 3209096141532094223L;
 
     /**

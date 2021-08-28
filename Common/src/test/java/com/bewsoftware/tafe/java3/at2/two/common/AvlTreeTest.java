@@ -39,10 +39,16 @@ import org.junit.jupiter.api.Test;
 public class AvlTreeTest
 {
 
+    private static final int[] SUB_LIST =
+    {
+        4, 7, 3, 2, 9, 12
+    };
+
     private static final int[] UNSORTED_LIST =
     {
         4, 1, 7, 3, 10, 2, 9, 6, 5, 8, 11
     };
+
     private static final int[] SORTED_LIST =
     {
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
@@ -340,22 +346,33 @@ public class AvlTreeTest
     {
         List<Integer> killList = new ArrayList<>();
 
-        for (int i = 0; i < UNSORTED_LIST.length; i++)
+        for (int i = 0; i < SUB_LIST.length; i++)
         {
-            killList.add(UNSORTED_LIST[i]);
+            killList.add(SUB_LIST[i]);
         }
 
         AvlTree<Integer> list = generateList();
+        int size = list.size();
         Assertions.assertTrue(list.removeAll(killList));
+        Assertions.assertEquals(size - (SUB_LIST.length - 1), list.size());
     }
 
     /**
      * Test of retainAll method, of class AvlTree.
      */
-//    @Test
+    @Test
     public void testRetainAll()
     {
-        // not impl
+        List<Integer> retainList = new ArrayList<>();
+
+        for (int i = 0; i < SUB_LIST.length; i++)
+        {
+            retainList.add(SUB_LIST[i]);
+        }
+
+        AvlTree<Integer> list = generateList();
+        Assertions.assertTrue(list.retainAll(retainList));
+        Assertions.assertEquals(SUB_LIST.length - 1, list.size());
     }
 
     /**

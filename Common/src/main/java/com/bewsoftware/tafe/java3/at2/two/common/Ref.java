@@ -49,12 +49,23 @@ package com.bewsoftware.tafe.java3.at2.two.common;
 public final class Ref<T>
 {
 
+    /**
+     * The object being held.
+     */
     public T val;
 
+    /**
+     * Default constructor.
+     */
     public Ref()
     {
     }
 
+    /**
+     * The initiating constructor.
+     *
+     * @param val the object to be held
+     */
     public Ref(T val)
     {
         this.val = val;

@@ -11,28 +11,13 @@ of no less than 10 words.  It must be possible to search the list, and add
 and remove from the list.
 
 ## Implementation
-This project consists of four sub-projects within the one Visual Studio session:
+This project consists of 1 sub-project within the aggregator project:
 
-- ConsoleAppTest
-- MyNETCoreLib
-- MyWpfNETCoreLib
-- Prog3AT2-Two
+- Common
 
-### ConsoleAppTest
-This is a small console application that uses a fixed set of names to test the required 
-functionality of the Balanced Binary Search Tree (BBST).
+**Note:** This is a work-in-progress.  It is expected that there will be at least one, and possibly
+two more projects to be added.
 
-### MyNETCoreLib
-This is a Class Library that contains the BBST: `AvlTree<T>` and the
-`ObservableAvlTree<T>`.
-
-### MyWpfNETCoreLib
-This is a WPF Class Library that contains a helper console window:
-`LogConsole` and a supporting class: `TextBlockOutputter`.
-Together they provide a means to redirect the `Console.Write{Line}()`
-output to a window for easier debugging.
-
-### Prog3AT2-Two
-This is the GUI program that provides the means to utilize the BBST in
-a more meaningful way.  It has buttons to Add, Remove and Search a
-list of strings, displayed in a ListBox.
+### Common
+This is a non-executable jar, containing a collection of classes that are in 'common' use across 
+multiple projects.  It contains the Balanced Binary Search Tree (BBST): `AvlTree<T>`.

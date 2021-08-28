@@ -28,7 +28,9 @@ package com.bewsoftware.tafe.java3.at2.two.common;
 import java.util.*;
 
 /**
- * This class does not support storage of either 'null's or duplicates.
+ * This is a Binary Search Tree with the default capability of being a Balanced Binary Search Tree.
+ * <p>
+ * This class does not support storage of either {@code null}s or duplicates.
  *
  * @author <a href="mailto:bw.opensource@yahoo.com">Bradley Willcott</a>
  * @param <E> type of item stored in this tree.
@@ -102,8 +104,9 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
     }
 
     /**
-     * Initializes a new instance of the {@linkplain  AvlTree}{@literal <E>} class with the contents
-     * of the {@code list} .
+     * Initializes a new instance of the {@linkplain  AvlTree}{@literal <E>} class, as a
+     * Binary Search Tree that will/will not be balanced based on the value of the
+     * parameter: {@code balanced}, with the contents of the {@code list}.
      *
      * @param list     the list containing the items to add to this tree
      * @param balanced if {@code true} tree will be balanced
@@ -232,16 +235,6 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
     }
 
     /**
-     * Get the value of count
-     *
-     * @return the value of count
-     */
-    public int getCount()
-    {
-        return count;
-    }
-
-    /**
      * Returns the index of the specified element in this list, or -1 if this list does
      * not contain the element.
      *
@@ -278,6 +271,18 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
     public boolean isEmpty()
     {
         return count == 0;
+    }
+
+    /**
+     * Returns an iterator over the elements in this set, in descending order.
+     * Equivalent in effect to {@code descendingSet().iterator()}.
+     *
+     * @return an iterator over the elements in this set, in descending order
+     */
+    public Iterator<E> descendingIterator()
+    {
+        reIndex();
+        return new ATDescItor<>();
     }
 
     @Override
@@ -373,7 +378,7 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
         //
         Objects.requireNonNull(c);
         boolean modified = false;
-        Iterator<E> it = iterator();
+        Iterator<E> it = descendingIterator();
 
         while (it.hasNext())
         {
@@ -449,7 +454,7 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
      * @param node    the node to add
      * @param added   {@code true } if successful, {@code false } if already exists
      *
-     * @return
+     * @return replacement parent node
      */
     private Node<E> addRecursive(Node<E> current, Node<E> node, Ref<Boolean> added)
     {
@@ -493,9 +498,9 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
     /**
      * Method to balance tree after insert or delete.
      *
-     * @param current
+     * @param current the Node whose sub-tree is to be balanced
      *
-     * @return
+     * @return the replacement parent Node
      */
     private Node<E> balanceTree(Node<E> current)
     {
@@ -520,7 +525,7 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
      * @param found    {@code true} if found
      * @param balanced {@code true} if tree is to be kept balanced
      *
-     * @return
+     * @return replacement parent Node
      */
     private Node<E> deleteNode(Node<E> current, E target, Ref<Boolean> found, boolean balanced)
     {
@@ -626,7 +631,7 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
      * current Node's sub-tree.
      *
      * @param target  the target object being sought
-     * @param current the current <see cref="Node{T}"/>
+     * @param current the current Node
      *
      * @return the Node if found, otherwise {@code null}
      */
@@ -707,9 +712,10 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
 
     /**
      * This is used to add an {@code item } to the tree.
-     * <p/>
+     * <p>
      * The reason it has been pulled out of the public method, is to allow constructor access
      * to it, as the public method is a virtual one.
+     * </p>
      *
      * @param item the item to add
      *
@@ -827,7 +833,7 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
     /**
      * Get the root Node.
      *
-     * @return
+     * @return the root Node
      */
     protected Node<E> getRoot()
     {
@@ -837,7 +843,7 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
     /**
      * Set the root Node.
      *
-     * @param root
+     * @param root the replacement Node
      */
     protected void setRoot(Node<E> root)
     {
@@ -873,26 +879,79 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
         }
     }
 
-    private final class ATItor<T> implements Iterator<T>
+    /**
+     * This is a descending iterator.
+     *
+     * @param <T> type of the elements
+     */
+    private class ATDescItor<T> extends ATItor<T>
     {
+
+        /**
+         * Instantiates a new ATDescItor object.
+         */
+        public ATDescItor()
+        {
+            super();
+            position = size();
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return isExpectedVersion() && position > 0;
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public T next()
+        {
+            if (!isExpectedVersion())
+            {
+                throw new ConcurrentModificationException(CONCURRENT_MODIFICATION_EXCEPTION_STRING);
+            }
+
+            if (--position < 0)
+            {
+                throw new NoSuchElementException();
+            }
+
+            lastReturned = (T) get(position);
+            return lastReturned;
+        }
+    }
+
+    /**
+     * This is an ascending iterator.
+     *
+     * @param <T> type of the elements
+     */
+    private class ATItor<T> implements Iterator<T>
+    {
+
+        /**
+         * String to display when there is a ConcurrentModificationException.
+         */
+        protected static final String CONCURRENT_MODIFICATION_EXCEPTION_STRING
+                                      = "Another thread has modified the data structure";
 
         /**
          * The expected version number.
          */
-        private int expectedVersion;
+        protected int expectedVersion;
 
         /**
          * The current position within the list.
          */
-        private int position;
+        protected int position;
 
         /**
          * The last entry returned.
          */
-        private T lastReturned;
+        protected T lastReturned;
 
         /**
-         *
+         * Instantiates a new ATItor object.
          */
         public ATItor()
         {
@@ -913,7 +972,7 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
         {
             if (!isExpectedVersion())
             {
-                throw new ConcurrentModificationException("Another thread has modified the data structure");
+                throw new ConcurrentModificationException(CONCURRENT_MODIFICATION_EXCEPTION_STRING);
             }
 
             if (++position == count)
@@ -931,7 +990,7 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
         {
             if (!isExpectedVersion())
             {
-                throw new ConcurrentModificationException("Another thread has modified the data structure");
+                throw new ConcurrentModificationException(CONCURRENT_MODIFICATION_EXCEPTION_STRING);
             }
 
             if (lastReturned == null)
@@ -947,9 +1006,9 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
         /**
          * Is the current version what we expect?
          *
-         * @return
+         * @return result
          */
-        private boolean isExpectedVersion()
+        protected boolean isExpectedVersion()
         {
             return expectedVersion == version;
         }
@@ -960,7 +1019,7 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
      *
      * @param <T> element type
      */
-    protected final class Node<T extends Comparable<T>>
+    protected final class Node<T>
     {
 
         /**
