@@ -27,6 +27,8 @@ package com.bewsoftware.tafe.java3.at2.two.console;
 
 import com.bewsoftware.tafe.java3.at2.two.common.AvlTree;
 import com.bewsoftware.tafe.java3.at2.two.common.MechanicalPart;
+import com.bewsoftware.tafe.java3.at2.two.common.Ref;
+import java.text.MessageFormat;
 
 /**
  * This is the main class for the console application.
@@ -38,6 +40,14 @@ import com.bewsoftware.tafe.java3.at2.two.common.MechanicalPart;
  */
 public class App
 {
+
+    private static final String FRMT = "{0}: [Qty:{1,number,integer}], "
+                                       + "[Cost:{2,number,currency}], "
+                                       + "[TotalValue:{3,number,currency}]";
+
+    private static final String FRMT2 = "{0}: [Cost:{1,number,currency}], "
+                                        + "[Markup:{2,number,percent}], "
+                                        + "[RetailPrice:{3,number,currency}]";
 
     private static final String LINE = "\n-------------------------------------------------------------------\n";
 
@@ -145,6 +155,34 @@ public class App
 
         System.out.println(LINE);
         System.out.println(parts);
-    }
 
+        System.out.println(LINE);
+
+        final StringBuilder sb = new StringBuilder("Stock listing:\n\n");
+        final Ref<Double> totalStockValue = new Ref<>(0.00);
+
+        parts.forEach(fePart ->
+        {
+            String result = MessageFormat.format(FRMT, fePart.getName(), fePart.getQuantity(),
+                                                 fePart.getCost(), fePart.totalValue());
+            sb.append(result).append("]\n");
+            totalStockValue.val += fePart.totalValue();
+        });
+
+        System.out.println(sb);
+
+        System.out.println(MessageFormat.format("Total Stock Value: {0,number,currency}", totalStockValue.val));
+        System.out.println(LINE);
+
+        final StringBuilder sb2 = new StringBuilder("Retail Price listing:\n\n");
+        parts.forEach(fePart ->
+        {
+            String result = MessageFormat.format(FRMT2, fePart.getName(), fePart.getCost(),
+                                                 fePart.getMarkup() / 100, fePart.retailPrice());
+            sb2.append(result).append("]\n");
+        });
+
+        System.out.println(sb2);
+
+    }
 }
