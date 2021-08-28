@@ -218,6 +218,32 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
     }
 
     /**
+     * Returns an iterator over the elements in this set, in descending order.
+     * Equivalent in effect to {@code descendingSet().iterator()}.
+     *
+     * @return an iterator over the elements in this set, in descending order
+     */
+    public Iterator<E> descendingIterator()
+    {
+        reIndex();
+        return new ATDescItor<>();
+    }
+
+    /**
+     * Display the data items in order.
+     */
+    public void display()
+    {
+        if (root == null)
+        {
+            System.out.println("Tree is empty");
+            return;
+        }
+
+        System.out.println(displayInOrder(root));
+    }
+
+    /**
      * Returns the element at the specified position in this list.
      *
      * @param index index of the element to return
@@ -271,18 +297,6 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
     public boolean isEmpty()
     {
         return count == 0;
-    }
-
-    /**
-     * Returns an iterator over the elements in this set, in descending order.
-     * Equivalent in effect to {@code descendingSet().iterator()}.
-     *
-     * @return an iterator over the elements in this set, in descending order
-     */
-    public Iterator<E> descendingIterator()
-    {
-        reIndex();
-        return new ATDescItor<>();
     }
 
     @Override
@@ -447,6 +461,19 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
         return a;
     }
 
+    @Override
+    public String toString()
+    {
+        return "AvlTree{\n"
+               + "  balanced = " + balanced + ",\n"
+               + "  count = " + count + ",\n"
+               + "  lastIndexVersion = " + lastIndexVersion + ",\n"
+               + "  version = " + version + "\n"
+               + "\n"
+               + displayInOrder(root)
+               + "\n}";
+    }
+
     /**
      * Recursively search for the correct node to add the new node to.
      *
@@ -581,6 +608,27 @@ public class AvlTree<E extends Comparable<E>> implements Set<E>
         }
 
         return current;
+    }
+
+    /**
+     * Prepare string output of all items held, in order of sequencing.
+     *
+     * @param current current Node to work down from
+     *
+     * @return built string
+     */
+    private String displayInOrder(Node<E> current)
+    {
+        StringBuilder rtn = new StringBuilder();
+
+        if (current != null)
+        {
+            rtn.append(displayInOrder(current.Left));
+            rtn.append(current.Value).append(", ");
+            rtn.append(displayInOrder(current.Right));
+        }
+
+        return rtn.length() > 0 ? rtn.toString() : "";
     }
 
     /**

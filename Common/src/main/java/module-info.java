@@ -35,5 +35,6 @@
  */
 module Common
 {
+    requires transitive java.desktop;
     exports com.bewsoftware.tafe.java3.at2.two.common;
 }
