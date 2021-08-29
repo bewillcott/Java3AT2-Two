@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <help_text/>
+  <zoom_level>11</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>737</x>
+      <y>198</y>
+      <w>187</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>valign=center
+
+Copyright © 2021
+-
+Name: Bradley Willcott
+ID:   M198449
+Date: 29 August 2021
+
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>319</x>
+      <y>121</y>
+      <w>341</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>valign=center
+halign=center
+fontsize=16
+lw=2
+
+*Java3 AT2 Two*
+Specification
+v1.0
+
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>264</x>
+      <y>297</y>
+      <w>275</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>bg=green
+transparency=0
+App
+--
+
+--
++ main(args:String[]) : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>627</x>
+      <y>297</y>
+      <w>319</w>
+      <h>264</h>
+    </coordinates>
+    <panel_attributes>bg=green
+transparency=0
+AvlTree&lt;E&gt;
+--
+- count : int
+- root : Node
+--
++ AvlTree()
+
++ add(item:string) : void
++ remove(item:string) : void
++ find(item:string) : boolean
+
+{innerclass
+Node&lt;T&gt;
+--
++ Value : string
++ Left : Node
++ Right : Node
+--
++ Node(value:T)
+
+innerclass}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>528</x>
+      <y>308</y>
+      <w>121</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+</panel_attributes>
+    <additional_attributes>10.0;20.0;90.0;20.0</additional_attributes>
+  </element>
+</diagram>
