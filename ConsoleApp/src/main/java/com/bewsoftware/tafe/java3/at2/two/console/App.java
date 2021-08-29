@@ -41,6 +41,8 @@ import java.text.MessageFormat;
 public class App
 {
 
+    private static final String TITLE = "              Java3 AT2 Two - Console Application";
+
     private static final String FRMT = "{0}: [Qty:{1,number,integer}], "
                                        + "[Cost:{2,number,currency}], "
                                        + "[TotalValue:{3,number,currency}]";
@@ -49,6 +51,7 @@ public class App
                                         + "[Markup:{2,number,percent}], "
                                         + "[RetailPrice:{3,number,currency}]";
 
+    private static final String HEADLINE = "===================================================================";
     private static final String LINE = "\n-------------------------------------------------------------------\n";
 
     private static final String[][] PARTS_LIST =
@@ -91,6 +94,8 @@ public class App
      */
     public static void main(String[] args)
     {
+        System.out.println(HEADLINE + "\n" + TITLE + "\n" + HEADLINE + "\n");
+
         AvlTree<MechanicalPart> parts = new AvlTree<>();
 
         for (String[] partStrings : PARTS_LIST)
@@ -183,6 +188,5 @@ public class App
         });
 
         System.out.println(sb2);
-
     }
 }

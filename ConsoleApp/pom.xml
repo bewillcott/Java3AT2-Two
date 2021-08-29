@@ -5,11 +5,14 @@
     <parent>
         <groupId>com.bewsoftware.tafe.java3.at2.two</groupId>
         <artifactId>Java3AT2-Two</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     
     <artifactId>ConsoleApp</artifactId>
     <packaging>jar</packaging>
+    
+    <name>Console Application</name>
+    <description>An application that shows how the `AvlTree&lt;E&gt;` class can be used.</description>
 
     <properties>
         <jar.manifest.mainClass>com.bewsoftware.tafe.java3.at2.two.console.App</jar.manifest.mainClass>

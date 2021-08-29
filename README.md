@@ -11,13 +11,20 @@ of no less than 10 words.  It must be possible to search the list, and add
 and remove from the list.
 
 ## Implementation
-This project consists of 1 sub-project within the aggregator project:
+This project consists of 2 sub-projects within the aggregator project:
 
 - Common
+- ConsoleApp
 
-**Note:** This is a work-in-progress.  It is expected that there will be at least one, and possibly
-two more projects to be added.
+By developing it this way, it would be possible to develop another application, say a GUI one,
+within the same aggregate project using the same _Common_ library classes.
 
 ### Common
 This is a non-executable jar, containing a collection of classes that are in 'common' use across 
-multiple projects.  It contains the Balanced Binary Search Tree (BBST): `AvlTree<T>`.
+multiple projects.  It contains the Balanced Binary Search Tree (BBST): `AvlTree<E>`and the 
+`MechanicalPart` classes.
+
+### ConsoleApp
+An application that shows how the `AvlTree<E>` class can be used. Ten `MechanicalPart`s are created
+and stored in the `AvlTree<E>` object, then one is searched for, removed and added again 
+(twice! - maybe).
